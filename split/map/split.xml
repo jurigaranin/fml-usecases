@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="split"/>
+  <url value="http://hl7.org/fhir/StructureMap/split"/>
+  <name value="split"/>
+  <status value="draft"/>
+  <structure>
+    <url value="http://example.org/StructureDefinition/SourcePatient"/>
+    <mode value="source"/>
+    <alias value="SourcePatient"/>
+  </structure>
+  <structure>
+    <url value="http://example.org/StructureDefinition/TargetPatient"/>
+    <mode value="target"/>
+    <alias value="TargetPatient"/>
+  </structure>
+  <group>
+    <name value="main"/>
+    <input>
+      <name value="src"/>
+      <type value="SourcePatient"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="TargetPatient"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="rule_fname"/>
+      <source>
+        <context value="src"/>
+        <element value="fullName"/>
+        <variable value="full_name"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <element value="firstName"/>
+        <variable value="first_name"/>
+      </target>
+      <rule>
+        <name value="rule_firstname"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <element value="firstName"/>
+          <transform value="evaluate"/>
+          <parameter>
+            <valueId value="full_name"/>
+          </parameter>
+          <parameter>
+            <valueString value="full_name.split(' ')[0]"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+    <rule>
+      <name value="rule_lname"/>
+      <source>
+        <context value="src"/>
+        <element value="fullName"/>
+        <variable value="full_name"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <element value="lastName"/>
+        <variable value="last_name"/>
+      </target>
+      <rule>
+        <name value="rule_lastname"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <element value="lastName"/>
+          <transform value="evaluate"/>
+          <parameter>
+            <valueId value="full_name"/>
+          </parameter>
+          <parameter>
+            <valueString value="full_name.split(' ')[1]"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>

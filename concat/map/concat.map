@@ -1,0 +1,16 @@
+map "http://hl7.org/fhir/StructureMap/concat" = "concat"
+
+uses "http://example.org/StructureDefinition/SourcePatient" alias SourcePatient as source
+uses "http://example.org/StructureDefinition/TargetPatient" alias TargetPatient as target
+
+group main(source src : SourcePatient, target tgt : TargetPatient) {
+    src.firstName as firstName -> tgt.fullName = firstName "fnrule";
+
+    src.lastName as lastName -> tgt.fullName as fullName then {
+      src -> tgt.fullName = evaluate(fullName, fullName & " " & lastName) "fullrule";
+    } "lnrule";
+  } 
+
+
+
+

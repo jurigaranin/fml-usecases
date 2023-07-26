@@ -1,0 +1,6 @@
+Compile
+java -jar validator_cli.jar -ig concat/logical -ig concat/map/concat.map -compile http://hl7.org/fhir/StructureMap/concat -version 5.0.0 -output concat/map/concat.xml
+
+Transform
+java -jar validator_cli.jar concat/source/input.json -transform http://hl7.org/fhir/StructureMap/concat -version 5.0.0 -ig concat/logical -ig concat/map -output concat/output.json
+

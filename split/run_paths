@@ -1,0 +1,6 @@
+Compile
+java -jar validator_cli.jar -ig split/logical -ig split/map/split.map -compile http://hl7.org/fhir/StructureMap/split -version 5.0.0 -output split/map/split.xml
+
+Transform
+java -jar validator_cli.jar split/source/input.json -transform http://hl7.org/fhir/StructureMap/split -version 5.0.0 -ig split/logical -ig split/map -output split/output.json
+

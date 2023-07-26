@@ -1,0 +1,19 @@
+map "http://hl7.org/fhir/StructureMap/split" = "split"
+
+uses "http://example.org/StructureDefinition/SourcePatient" alias SourcePatient as source
+uses "http://example.org/StructureDefinition/TargetPatient" alias TargetPatient as target
+
+group main(source src : SourcePatient, target tgt : TargetPatient) {
+
+  src.fullName as full_name -> tgt.firstName as first_name then {
+    src -> tgt.firstName = evaluate(full_name, full_name.split(" ")[0]) "rule_firstname"; 
+  } "rule_fname";
+
+  src.fullName as full_name -> tgt.lastName as last_name then {
+    src -> tgt.lastName = evaluate(full_name, full_name.split(" ")[1]) "rule_lastname"; 
+  } "rule_lname";
+
+}
+
+
+

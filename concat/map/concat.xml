@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<StructureMap xmlns="http://hl7.org/fhir">
+  <id value="concat"/>
+  <url value="http://hl7.org/fhir/StructureMap/concat"/>
+  <name value="concat"/>
+  <status value="draft"/>
+  <structure>
+    <url value="http://example.org/StructureDefinition/SourcePatient"/>
+    <mode value="source"/>
+    <alias value="SourcePatient"/>
+  </structure>
+  <structure>
+    <url value="http://example.org/StructureDefinition/TargetPatient"/>
+    <mode value="target"/>
+    <alias value="TargetPatient"/>
+  </structure>
+  <group>
+    <name value="main"/>
+    <input>
+      <name value="src"/>
+      <type value="SourcePatient"/>
+      <mode value="source"/>
+    </input>
+    <input>
+      <name value="tgt"/>
+      <type value="TargetPatient"/>
+      <mode value="target"/>
+    </input>
+    <rule>
+      <name value="fnrule"/>
+      <source>
+        <context value="src"/>
+        <element value="firstName"/>
+        <variable value="firstName"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <element value="fullName"/>
+        <transform value="copy"/>
+        <parameter>
+          <valueId value="firstName"/>
+        </parameter>
+      </target>
+    </rule>
+    <rule>
+      <name value="lnrule"/>
+      <source>
+        <context value="src"/>
+        <element value="lastName"/>
+        <variable value="lastName"/>
+      </source>
+      <target>
+        <context value="tgt"/>
+        <element value="fullName"/>
+        <variable value="fullName"/>
+      </target>
+      <rule>
+        <name value="fullrule"/>
+        <source>
+          <context value="src"/>
+        </source>
+        <target>
+          <context value="tgt"/>
+          <element value="fullName"/>
+          <transform value="evaluate"/>
+          <parameter>
+            <valueId value="fullName"/>
+          </parameter>
+          <parameter>
+            <valueString value="fullName &amp; ' ' &amp; lastName"/>
+          </parameter>
+        </target>
+      </rule>
+    </rule>
+  </group>
+</StructureMap>
